@@ -4,7 +4,8 @@
 use ode_solvers::dopri5::*;
 use ode_solvers::*;
 
-type State = Vector6<f64>;
+//type State = Vector6<f64>;
+type State = DVector<f64>;
 type Time = f64;
 
 use std::{
@@ -23,14 +24,16 @@ fn main() {
     let period = 2.0 * PI * (a.powi(3) / system.mu).sqrt();
 
     // Orbit with: a = 20000km, e = 0.7, i = 35 deg, raan = 100 deg, arg_per = 65 deg, true_an = 30 deg.
-    let y0 = State::new(
+    //let y0 = State::new(
+    let y0 = State::from(vec![
         -5007.248417988539,
         -1444.918140151374,
         3628.534606178356,
         0.717716656891,
         -10.224093784269,
         0.748229399696,
-    );
+    //);
+    ]);
 
     // Create a stepper and run the integration.
     let mut stepper = Dopri5::new(system, 0.0, 5.0 * period, 60.0, y0, 1.0e-10, 1.0e-10);
